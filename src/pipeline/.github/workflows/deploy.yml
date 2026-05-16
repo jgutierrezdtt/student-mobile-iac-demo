@@ -1,0 +1,49 @@
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# TODO (step 08): este workflow no declara permissions — usa los permisos
+# por defecto del repositorio (write-all). Anade un bloque permissions:
+# con los permisos minimos necesarios (contents: read, id-token: write).
+
+jobs:
+  deploy:
+    name: Deploy to production
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4.2.2
+
+      - name: Configure AWS credentials via OIDC
+        uses: aws-actions/configure-aws-credentials@010d0da01d0b5a38af31e9c3470dbfdabdecca3a  # v4.0.1
+        with:
+          role-to-assume: ${{ secrets.AWS_DEPLOY_ROLE_ARN }}
+          aws-region: us-east-1
+
+      - name: Set up Node.js
+        uses: actions/setup-node@1d0ff469b433462e7f8d2b5a1fd3a55e1b22dcdd  # v4.2.0
+        with:
+          node-version: "18"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test
+
+      # TODO (step 08): este paso interpola github.event directamente en run:,
+      # lo que permite inyeccion de comandos si el evento viene de un PR externo.
+      # Mueve el valor a una variable de entorno con env: y referenciala como $VAR.
+      - name: Log deployment info
+        run: echo "Deploying commit ${{ github.sha }} to production"
+
+      - name: Deploy to Lambda
+        run: |
+          zip -r function.zip . --exclude "*.git*" --exclude "node_modules/.*"
+          aws lambda update-function-code \
+            --function-name prod-app \
+            --zip-file fileb://function.zip

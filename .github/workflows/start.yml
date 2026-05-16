@@ -1,0 +1,12 @@
+name: Start
+
+on:
+  workflow_dispatch:
+
+jobs:
+  start:
+    uses: jgutierrezdtt/security-tutorial-base/.github/workflows/reusable-start.yml@main
+    with:
+      tutorial-name: Secure Coding Mobile and IaC
+    secrets:
+      token: ${{ secrets.GITHUB_TOKEN }}

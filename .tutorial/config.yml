@@ -1,0 +1,6 @@
+tutorial:
+  name: Secure Coding Mobile and IaC
+  level: professional
+  total_steps: 10
+  default_language: es
+  base_repository: jgutierrezdtt/security-tutorial-base
