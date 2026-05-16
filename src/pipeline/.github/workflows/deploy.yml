@@ -5,9 +5,9 @@ on:
     branches: [main]
   workflow_dispatch:
 
-# TODO (step 08): este workflow no declara permissions — usa los permisos
-# por defecto del repositorio (write-all). Anade un bloque permissions:
-# con los permisos minimos necesarios (contents: read, id-token: write).
+permissions:
+  contents: read
+  id-token: write
 
 jobs:
   deploy:
@@ -35,11 +35,10 @@ jobs:
       - name: Run tests
         run: npm test
 
-      # TODO (step 08): este paso interpola github.event directamente en run:,
-      # lo que permite inyeccion de comandos si el evento viene de un PR externo.
-      # Mueve el valor a una variable de entorno con env: y referenciala como $VAR.
       - name: Log deployment info
-        run: echo "Deploying commit ${{ github.sha }} to production"
+        env:
+          COMMIT_SHA: ${{ github.sha }}
+        run: echo "Deploying commit $COMMIT_SHA to production"
 
       - name: Deploy to Lambda
         run: |

@@ -32,9 +32,14 @@ resource "aws_s3_bucket" "app_bucket" {
   }
 }
 
-# TODO (step 04): el bucket no tiene bloqueo de acceso publico.
-# Lee el paso 04 en .tutorial/steps/04-iac-misconfigurations.md
-# para anadir el recurso de bloqueo y hacer la base de datos no publica.
+resource "aws_s3_bucket_public_access_block" "app_bucket" {
+  bucket = aws_s3_bucket.app_bucket.id
+
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
+}
 
 resource "aws_s3_bucket_versioning" "app_bucket" {
   bucket = aws_s3_bucket.app_bucket.id
@@ -116,9 +121,7 @@ resource "aws_db_instance" "main" {
   username = "appuser"
   password = data.aws_ssm_parameter.db_password.value
 
-  # TODO (step 04): la base de datos es accesible desde internet.
-  # Cambia a publicly_accessible = false
-  publicly_accessible = true
+  publicly_accessible = false
   vpc_security_group_ids = [aws_security_group.app_sg.id]
 
   storage_encrypted = true

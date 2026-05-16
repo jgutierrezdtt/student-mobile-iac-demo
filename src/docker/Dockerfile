@@ -1,13 +1,19 @@
-# TODO (step 07): imagen unica sin separacion de etapas, ejecuta como root.
-# Lee el paso 07 en .tutorial/steps/07-container-security.md
-# para convertirla en una imagen multi-stage con usuario no privilegiado.
-FROM node:18-alpine
+FROM node:18-alpine AS builder
 WORKDIR /app
 
 COPY package*.json ./
 RUN npm ci --only=production && npm cache clean --force
 
 COPY . .
+
+# ---- runtime stage ----
+FROM node:18-alpine
+WORKDIR /app
+
+COPY --from=builder /app .
+
+RUN addgroup -S appgroup && adduser -S appuser -G appgroup
+USER appuser
 
 EXPOSE 3000
 

@@ -1,6 +1,14 @@
-# TODO (step 09): este archivo no tiene reglas de ofuscacion activa.
-# Lee el paso 09 en .tutorial/steps/09-obfuscation.md
-# para anadir reglas de ofuscacion con diccionario personalizado.
+-obfuscationdictionary proguard-dictionary.txt
+-classobfuscationdictionary proguard-dictionary.txt
+-packageobfuscationdictionary proguard-dictionary.txt
+
+-keepclassmembers class * implements java.io.Serializable {
+    private static final java.io.ObjectStreamField[] serialPersistentFields;
+    private void writeObject(java.io.ObjectOutputStream);
+    private void readObject(java.io.ObjectInputStream);
+    java.lang.Object writeReplace();
+    java.lang.Object readResolve();
+}
 
 # Componentes de Android — el framework los instancia por nombre
 -keep public class * extends android.app.Activity

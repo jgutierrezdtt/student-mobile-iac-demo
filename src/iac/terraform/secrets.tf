@@ -32,15 +32,14 @@ data "aws_ssm_parameter" "jwt_secret" {
 # Outputs — los valores sensibles se marcan para que no aparezcan en logs
 # ---------------------------------------------------------------------------
 
-# TODO (step 05): los outputs exponen valores secretos en los logs de Terraform.
-# Lee el paso 05 en .tutorial/steps/05-secretos-en-iac.md
-# para aprender como ocultar estos valores en los outputs.
 output "api_key" {
   description = "API key de la aplicacion"
   value       = data.aws_ssm_parameter.api_key.value
+  sensitive = true
 }
 
 output "jwt_secret" {
   description = "Secret para firmar JWT"
   value       = data.aws_ssm_parameter.jwt_secret.value
+  sensitive = true
 }

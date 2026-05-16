@@ -1,15 +1,22 @@
 package com.myapp.storage
 
 import android.content.Context
-import android.content.SharedPreferences
+import androidx.security.crypto.EncryptedSharedPreferences
+import androidx.security.crypto.MasterKey
 
-// TODO (step 01): este archivo usa SharedPreferences en texto claro.
-// Los tokens y datos de usuario quedan expuestos en el sistema de archivos.
-// Lee .tutorial/steps/01-almacenamiento-inseguro.md para implementar cifrado.
 class UserPreferences(context: Context) {
 
-    private val prefs: SharedPreferences =
-        context.getSharedPreferences("user_prefs", Context.MODE_PRIVATE)
+    private val masterKey = MasterKey.Builder(context)
+        .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+        .build()
+
+    private val prefs = EncryptedSharedPreferences.create(
+        context,
+        "user_prefs_encrypted",
+        masterKey,
+        EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+        EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM
+    )
 
     fun saveUserToken(token: String) {
         prefs.edit().putString(KEY_TOKEN, token).apply()

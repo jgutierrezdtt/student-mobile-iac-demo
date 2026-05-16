@@ -19,11 +19,10 @@ resource "aws_iam_role" "lambda_exec" {
   }
 }
 
-# TODO (step 06): los statements IAM no tienen identificadores ni permisos explicitamente declarados.
-# Lee el paso 06 en .tutorial/steps/06-iam-overpermissive.md
-# para anadir identificadores y declaraciones de acceso correctas a cada statement.
 data "aws_iam_policy_document" "lambda_assume_role" {
   statement {
+    sid    = "LambdaAssumeRole"
+    effect = "Allow"
     principals {
       type        = "Service"
       identifiers = ["lambda.amazonaws.com"]
