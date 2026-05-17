@@ -1,30 +1,36 @@
-# Medalla de completacion — template-secure-coding-mobile-iac
+# Medalla de completacion
 
-**Token de integridad:** `F6AE04903850F9D8BDAD8C9BE827CC75E13FBD39`
+**Completado por:** jgutierrezdtt
+**Repositorio:** jgutierrezdtt/student-mobile-iac-demo
+**Fecha:** 2026-05-17 07:26 UTC
+**Pasos completados:** 10/10
 
-| Campo | Valor |
-|-------|-------|
-| Repositorio | `jgutierrezdtt/template-secure-coding-mobile-iac` |
-| Completado por | `jgutierrezdtt` |
-| Pasos verificados | 10 de 10 |
-| Fecha | 2026-05-16 20:29 UTC |
-| Verifier Run ID | `25972133838` |
+## Prueba de integridad
+
+Esta medalla fue generada automaticamente por GitHub Actions cuando los 10 validators pasaron.
+La prueba de completacion es publica y verificable:
+
+- **Run de Actions:** https://github.com/jgutierrezdtt/student-mobile-iac-demo/actions/runs/25984607504
+- **Commit validado:** https://github.com/jgutierrezdtt/student-mobile-iac-demo/commit/2b62ef101eb835d3cd642712d0dbbef6c775714a
+- **SHA:** `2b62ef101eb835d3cd642712d0dbbef6c775714a`
+
+Para verificar: abre el run de Actions y comprueba que todos los validators
+retornaron PASS en ese commit. El historial de GitHub es inmutable.
+
+## Pasos completados
+
+| Paso | Estado |
+|------|--------|
+| validate-step-01 | PASS |
+| validate-step-02 | PASS |
+| validate-step-03 | PASS |
+| validate-step-04 | PASS |
+| validate-step-05 | PASS |
+| validate-step-06 | PASS |
+| validate-step-07 | PASS |
+| validate-step-08 | PASS |
+| validate-step-09 | PASS |
+| validate-step-10 | PASS |
 
 ---
-
-## Que garantiza este token
-
-- Los 10 validators fueron ejecutados por `jgutierrezdtt/tutorial-verifier`, un repositorio controlado por el instructor, **no por el alumno**.
-- El codigo verificado es el que estaba en el fork en el momento de la solicitud — el verifier hizo `git clone` del fork directamente.
-- El token es HMAC-SHA256 firmado con `COMPLETION_SECRET`, un secreto que existe **unicamente** en el repositorio del verifier. El alumno nunca puede leerlo ni calcularlo.
-- El `Verifier Run ID` (`25972133838`) es el ID de la ejecucion de Actions en el verifier. Puedes auditarlo en `https://github.com/jgutierrezdtt/tutorial-verifier/actions/runs/25972133838`.
-- Modificar este archivo manualmente invalida el token — `verify-medal.py` en el fork detecta la manipulacion en cada push.
-
----
-
-## Como auditar esta completacion
-
-1. Abre `https://github.com/jgutierrezdtt/tutorial-verifier/actions/runs/25972133838`
-2. Comprueba los logs del job `Verify jgutierrezdtt/template-secure-coding-mobile-iac`.
-3. Todos los validators deben aparecer como `PASS`.
-4. El token en los logs debe coincidir con el token de arriba.
+_Generado por github-actions[bot] — no editar manualmente._
