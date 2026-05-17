@@ -2,7 +2,7 @@
 
 **Completado por:** jgutierrezdtt
 **Repositorio:** jgutierrezdtt/student-mobile-iac-demo
-**Fecha:** 2026-05-17 09:03 UTC
+**Fecha:** 2026-05-17 09:08 UTC
 **Pasos completados:** 10/10
 
 ## Prueba de integridad
@@ -10,9 +10,9 @@
 Esta medalla fue generada automaticamente por GitHub Actions cuando los 10 validators pasaron.
 La prueba de completacion es publica y verificable:
 
-- **Run de Actions:** https://github.com/jgutierrezdtt/student-mobile-iac-demo/actions/runs/25986601516
-- **Commit validado:** https://github.com/jgutierrezdtt/student-mobile-iac-demo/commit/02e52d1ed58486cf307f1dcf588b66f45c920a3c
-- **SHA:** `02e52d1ed58486cf307f1dcf588b66f45c920a3c`
+- **Run de Actions:** https://github.com/jgutierrezdtt/student-mobile-iac-demo/actions/runs/25986698285
+- **Commit validado:** https://github.com/jgutierrezdtt/student-mobile-iac-demo/commit/6e56175276653e5f63d3dd3d556135c84c973299
+- **SHA:** `6e56175276653e5f63d3dd3d556135c84c973299`
 
 Para verificar: abre el run de Actions y comprueba que todos los validators
 retornaron PASS en ese commit. El historial de GitHub es inmutable.
