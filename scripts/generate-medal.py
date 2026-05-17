@@ -3,9 +3,9 @@
 Actualiza el README con el progreso del tutorial y genera la medalla
 cuando todos los validators pasan.
 
-Siempre actualiza README.md con el estado actual de cada paso.
-Solo escribe docs/MEDALLA.md si TODOS los validators pasan.
-No requiere ningun secret.
+- En progreso: actualiza la tabla de pasos en el README con Pendiente/Completado.
+- Completado: reemplaza el README entero con una pagina de certificado visual.
+- Siempre escribe docs/MEDALLA.md cuando todos pasan.
 """
 
 import glob
@@ -27,6 +27,19 @@ STEP_FILES = {
     "validate-step-08": "`src/pipeline/.github/workflows/deploy.yml`",
     "validate-step-09": "`src/android/proguard-rules.pro`",
     "validate-step-10": "`docs/secure-coding-mobile-iac-checklist.md`",
+}
+
+STEP_TOPICS = {
+    "validate-step-01": "Almacenamiento cifrado con EncryptedSharedPreferences",
+    "validate-step-02": "Certificate pinning con OkHttp",
+    "validate-step-03": "Autenticacion biometrica con Android Keystore",
+    "validate-step-04": "S3 y RDS sin acceso publico",
+    "validate-step-05": "Outputs sensibles marcados en Terraform",
+    "validate-step-06": "Politicas IAM con minimo privilegio",
+    "validate-step-07": "Imagen Docker multi-stage con usuario non-root",
+    "validate-step-08": "Workflow CI/CD con permisos minimos",
+    "validate-step-09": "Ofuscacion activa con ProGuard",
+    "validate-step-10": "Checklist de seguridad completado",
 }
 
 
@@ -66,10 +79,10 @@ def run_validators(repo_root):
 
 
 # ---------------------------------------------------------------------------
-# Actualizacion del README
+# README: estado en progreso (actualiza la tabla)
 # ---------------------------------------------------------------------------
 
-def update_readme(repo_root, results, medal_url=None):
+def update_readme_progress(repo_root, results):
     readme_path = os.path.join(repo_root, "README.md")
     with open(readme_path, "r", encoding="utf-8") as f:
         content = f.read()
@@ -83,10 +96,6 @@ def update_readme(repo_root, results, medal_url=None):
         estado = "Completado" if results.get(step, False) else "Pendiente"
         rows.append(f"| Paso {num} | {file_ref} | {estado} |")
 
-    medal_line = ""
-    if medal_url:
-        medal_line = f"\n**Medalla obtenida:** [Ver MEDALLA.md]({medal_url})\n"
-
     new_section = (
         "## Tabla de pasos (resumen de progreso)\n\n"
         f"**Progreso: {passed_count}/{total} pasos completados**\n\n"
@@ -94,10 +103,8 @@ def update_readme(repo_root, results, medal_url=None):
         "|------|---------------------|--------|\n"
         + "\n".join(rows)
         + "\n"
-        + medal_line
     )
 
-    # Reemplaza la seccion existente preservando lo que viene despues
     pattern = r"## Tabla de pasos \(resumen de progreso\).*?(\n## )"
     new_content = re.sub(pattern, new_section + r"\1", content, flags=re.DOTALL)
 
@@ -105,6 +112,87 @@ def update_readme(repo_root, results, medal_url=None):
         f.write(new_content)
 
     print(f"[OK] README actualizado: {passed_count}/{total} pasos completados")
+
+
+# ---------------------------------------------------------------------------
+# README: pagina de certificado cuando todos pasan
+# ---------------------------------------------------------------------------
+
+def write_readme_completed(repo_root, actor, repo, run_id, sha, results):
+    now = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    run_url = f"https://github.com/{repo}/actions/runs/{run_id}"
+    commit_url = f"https://github.com/{repo}/commit/{sha}"
+    total = len(results)
+
+    step_rows = ""
+    for step, topic in STEP_TOPICS.items():
+        num = int(step.replace("validate-step-", ""))
+        step_rows += f"| {num:02d} | {topic} | PASS |\n"
+
+    content = f"""\
+# Secure Coding Mobile e IaC — Completado
+
+> Repositorio de **{actor}**
+
+---
+
+## Certificado de finalizacion
+
+Este repositorio ha superado los {total} controles de seguridad del tutorial
+**Secure Coding Mobile e IaC**.
+
+| | |
+|---|---|
+| **Alumno** | {actor} |
+| **Repositorio** | [{repo}](https://github.com/{repo}) |
+| **Fecha** | {now} |
+| **Pasos** | {total}/{total} |
+| **Medalla** | [docs/MEDALLA.md](docs/MEDALLA.md) |
+
+---
+
+## Controles de seguridad implementados
+
+| Paso | Control implementado | Resultado |
+|------|----------------------|-----------|
+{step_rows}
+---
+
+## Prueba de integridad
+
+La medalla fue generada automaticamente por `github-actions[bot]` cuando los
+{total} validators pasaron. La prueba es publica y permanente:
+
+- **Run:** {run_url}
+- **Commit:** {commit_url}
+- **SHA:** `{sha}`
+
+Cualquier persona puede abrir el run y verificar que todos los validators
+retornaron PASS en ese commit exacto.
+
+---
+
+## Que has aprendido
+
+- Cifrado de datos en reposo en dispositivos Android con Jetpack Security
+- Proteccion de conexiones de red contra ataques de intermediario
+- Gestion segura de sesiones con Android Keystore y biometria
+- Configuracion segura de infraestructura cloud con Terraform
+- Principio de minimo privilegio en politicas IAM de AWS
+- Hardening de contenedores Docker: multi-stage y non-root
+- Seguridad en pipelines de CI/CD con GitHub Actions
+- Ofuscacion de codigo movil con ProGuard
+
+---
+
+_Generado por github-actions[bot] — [{repo}](https://github.com/{repo})_
+"""
+
+    readme_path = os.path.join(repo_root, "README.md")
+    with open(readme_path, "w", encoding="utf-8") as f:
+        f.write(content)
+
+    print("[OK] README reemplazado con pagina de certificado")
 
 
 # ---------------------------------------------------------------------------
@@ -177,17 +265,15 @@ def main():
 
     print(f"\n=== Resultado: {len(passed)}/{len(results)} pasos completados ===")
 
-    medal_url = None
-    if not failed:
-        print("\n[OK] Todos los validators pasaron. Generando medalla...")
-        write_medal(repo_root, repo, actor, run_id, sha, passed)
-        medal_url = "docs/MEDALLA.md"
-    else:
+    if failed:
         print(f"\n[INFO] {len(failed)} pasos pendientes:")
         for s in sorted(failed):
             print(f"  - {s}")
-
-    update_readme(repo_root, results, medal_url)
+        update_readme_progress(repo_root, results)
+    else:
+        print("\n[OK] Todos los validators pasaron. Generando certificado...")
+        write_medal(repo_root, repo, actor, run_id, sha, passed)
+        write_readme_completed(repo_root, actor, repo, run_id, sha, results)
 
 
 if __name__ == "__main__":
