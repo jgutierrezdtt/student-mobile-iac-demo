@@ -41,9 +41,9 @@ Este repositorio ha superado los 10 controles de seguridad del tutorial
 La medalla fue generada automaticamente por `github-actions[bot]` cuando los
 10 validators pasaron. La prueba es publica y permanente:
 
-- **Run:** https://github.com/jgutierrezdtt/student-mobile-iac-demo/actions/runs/25985380909
-- **Commit:** https://github.com/jgutierrezdtt/student-mobile-iac-demo/commit/a0fd723de6116d13d7bc154cd7bd4317627b0bc2
-- **SHA:** `a0fd723de6116d13d7bc154cd7bd4317627b0bc2`
+- **Run:** https://github.com/jgutierrezdtt/student-mobile-iac-demo/actions/runs/25986601516
+- **Commit:** https://github.com/jgutierrezdtt/student-mobile-iac-demo/commit/02e52d1ed58486cf307f1dcf588b66f45c920a3c
+- **SHA:** `02e52d1ed58486cf307f1dcf588b66f45c920a3c`
 
 Cualquier persona puede abrir el run y verificar que todos los validators
 retornaron PASS en ese commit exacto.
