@@ -37,19 +37,23 @@ Este tutorial cubre exactamente esos vectores de ataque con codigo real y explic
 
 ## Tabla de pasos (resumen de progreso)
 
+**Progreso: 10/10 pasos completados**
+
 | Paso | Archivo a modificar | Estado |
 |------|---------------------|--------|
 | Paso 0 | Introduccion — lee primero | Empezar aqui |
-| Paso 1 | `src/android/storage/UserPreferences.kt` | Pendiente |
-| Paso 2 | `src/android/network/ApiClient.kt` | Pendiente |
-| Paso 3 | `src/android/auth/SessionManager.kt` | Pendiente |
-| Paso 4 | `src/iac/terraform/main.tf` | Pendiente |
-| Paso 5 | `src/iac/terraform/secrets.tf` | Pendiente |
-| Paso 6 | `src/iac/terraform/iam.tf` | Pendiente |
-| Paso 7 | `src/docker/Dockerfile` | Pendiente |
-| Paso 8 | `src/pipeline/.github/workflows/deploy.yml` | Pendiente |
-| Paso 9 | `src/android/proguard-rules.pro` | Pendiente |
-| Paso 10 | `docs/secure-coding-mobile-iac-checklist.md` | Pendiente |
+| Paso 1 | `src/android/storage/UserPreferences.kt` | Completado |
+| Paso 2 | `src/android/network/ApiClient.kt` | Completado |
+| Paso 3 | `src/android/auth/SessionManager.kt` | Completado |
+| Paso 4 | `src/iac/terraform/main.tf` | Completado |
+| Paso 5 | `src/iac/terraform/secrets.tf` | Completado |
+| Paso 6 | `src/iac/terraform/iam.tf` | Completado |
+| Paso 7 | `src/docker/Dockerfile` | Completado |
+| Paso 8 | `src/pipeline/.github/workflows/deploy.yml` | Completado |
+| Paso 9 | `src/android/proguard-rules.pro` | Completado |
+| Paso 10 | `docs/secure-coding-mobile-iac-checklist.md` | Completado |
+
+**Medalla obtenida:** [Ver MEDALLA.md](docs/MEDALLA.md)
 
 ## Nivel
 
